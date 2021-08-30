@@ -78,7 +78,7 @@ public class EmailService {
 			message.setSubject("Compra efetuada");
 
 			MimeBodyPart mimeBodyPart = new MimeBodyPart();
-			mimeBodyPart.setContent("Olá " + nomeCliente + ", sua compra nesta loja foi efetuada com sucesso!", "text/plain");
+			mimeBodyPart.setContent("Olá " + nomeCliente + ", compra efetuada com sucesso!", "text/plain");
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(mimeBodyPart);
