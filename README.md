@@ -11,3 +11,93 @@ O desenvolvimento de softwares orientados em larga escla apresenta dificuldades 
 O SRP reza que todo módulo de código desenvolvido deve possuir apenas uma responsabilidade com relação as funcionalidade do programa, apresentando assim apenas um eixo de mudança. Os programas desenvolvidas com esse principio apresentam alta coesão e baixo acoplamento dado a especificidade dos blocos de código produzidos. Sendo assim, a manutenção destes programas será facilitados devido a baixa interdependência entre os diversos blocos de código e focalização das responsabilidade de cada bloco. Esses módulos podem ser melhor reutilizados com menores chances de encadeamento de erros, visto que o programa estará melhor organizado em módulos bem definidos.
 
 Entretanto, a aplicação deste postulado pode ser complicada, sendo muito dependente da experiencia do programador para a detecção de responsabilidades no âmbito do programa em desenvolvimento. Como por exemplo, muitas vezes para duas pessoas diferentes, um mesmo bloco de código pode possuir um numero diferente de responsabilidades, sendo que as experiencias dessas duas pessoas na área podem ser diferentes, produzindo visões diferentes de uma mesma solução. Diante disso, dentro do desenvolvimento de software é possível ocorrer a má utilização do SRP, como por exemplo nesta classe ''EmailSender'', que funciona para enviar emails a clientes em um sistema web de compras online.
+
+```Java
+// ...
+
+// Classe que envia um email da compra do cliente para ele.
+// Receber o ID do cliente junto com email.
+// Acessa o BD
+// Armazena os dados de cliente
+// Monta o email pré feito. <- (regra de negocio)
+// enviar o email. <- (Parte que realmente importa)
+public class EmailService {
+
+	public void send(InternetAddress empresaEmail, String clienteID) {
+
+		try {
+
+			// Carregando o arquivo de propriedades do projeto
+			Properties propriedades = new Properties();
+			InputStream  streamPropriedades = EmpresaController.class.getClassLoader().getResourceAsStream("config.properties");
+
+			if (streamPropriedades != null) {
+				propriedades.load(streamPropriedades);
+			} else {
+				throw new FileNotFoundException("config.properties não encontrado!");
+			}
+
+			// Inicializa sessao com email da empresa para o envio
+			String login = propriedades.getProperty("login");
+			String senha = propriedades.getProperty("senha");
+
+			Session session = Session.getInstance(propriedades, new Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication(login, senha);
+				}
+			});
+
+			// Realiza a conexao ao sql server.
+			try {
+				Class.forName("com.mysql.cj.jdbc.Driver");
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			}
+
+			// Realiza a consulta das informacoes necessarias do cliente (email e nome) 
+			String consultaSql = "SELECT * FROM CLIENTE WHERE ID = ?";
+			String nomeCliente = null, emailCliente = null;
+
+			try {
+				Connection conexao = this.getConnection();
+				PreparedStatement stat = conexao.prepareStatement(consultaSql);
+
+				stat.setLong(1, clienteID);
+				ResultSet resultados = stat.executeQuery();
+				if (resultados.next()) {
+					nomeCliente = resultados.getString("nome");
+					emailCliente = resultados.getString("email");
+				}
+
+				resultados.close();
+				stat.close();
+				conexao.close();
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
+
+			// Inicializando o envio do email 
+			Message message = new MimeMessage(session);
+			message.setFrom("empresa@email.com"); // empresa envia o email
+			message.setRecipient(Message.RecipientType.TO, emailCliente); // cliente recebe o email
+			message.setSubject("Compra efetuada");
+
+			MimeBodyPart mimeBodyPart = new MimeBodyPart();
+			mimeBodyPart.setContent("Olá " + nomeCliente + ", sua compra nesta loja foi efetuada com sucesso!", "text/plain");
+
+			Multipart multipart = new MimeMultipart();
+			multipart.addBodyPart(mimeBodyPart);
+
+			message.setContent(multipart);
+			Transport.send(message);
+
+			System.out.println("Mensagem enviada!");
+
+		} catch (Exception e) {
+			System.out.println("Mensagem não enviada!");
+			e.printStackTrace();
+		}
+	}
+}
+```
