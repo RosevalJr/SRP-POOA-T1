@@ -13,14 +13,8 @@ O SRP reza que todo módulo de código desenvolvido deve possuir apenas uma resp
 Entretanto, a aplicação deste postulado pode ser complicada, sendo muito dependente da experiencia do programador para a detecção de responsabilidades no âmbito do programa em desenvolvimento. Como por exemplo, muitas vezes para duas pessoas diferentes, um mesmo bloco de código pode possuir um numero diferente de responsabilidades, sendo que as experiencias dessas duas pessoas na área podem ser diferentes, produzindo visões diferentes de uma mesma solução. Diante disso, dentro do desenvolvimento de software é possível ocorrer a má utilização do SRP, como por exemplo nesta classe ''EmailSender'', que funciona para enviar emails a clientes em um sistema web de compras online.
 
 ```Java
-// ...
-
-// Classe que envia um email da compra do cliente para ele.
-// Receber o ID do cliente junto com email.
-// Acessa o BD
-// Armazena os dados de cliente
-// Monta o email pré feito. <- (regra de negocio)
-// enviar o email. <- (Parte que realmente importa)
+...
+// Classe que envia um email da compra de um cliente para ele.
 public class EmailService {
 
 	public void send(InternetAddress empresaEmail, String clienteID) {
@@ -100,4 +94,5 @@ public class EmailService {
 		}
 	}
 }
+...
 ```
