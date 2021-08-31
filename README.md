@@ -96,3 +96,6 @@ public class EmailService {
 }
 ...
 ```
+Diante do código apresentado é possível identificar que a classe ``EmailService`` tem mais de uma responsabilidade. Além da classe estar encarregada de realizar a configuração da autenricação do email da empresa através da classe ``Properties`` para realizar o envio do email. Essa classe também realiza a conexão, acesso e consulta ao banco de dados do sistema web para recuperar o email do cliente desejado.
+
+Sendo que, as responsabilidades de um bloco de código esta atrelada aos papeis que as pessoas desempenham no desenvolvimento de software. A classe apresentada é manuseada por dois grupos diferentes de pessoas encarregadas deste sistema web, o time de marketing que administra o envio de emails e o time de banco de dados que administra toda a arquitetura do banco. O manuseio desta classe com multiplas responsabilidades por dois times diferentes durante o desenvolvimento deste sistema pode ocasionar em varios encadeamentos de bug não esperados. Portanto, é desejado que as multiplas responsabilidades desta classe sejam quebradas em multiplos módulos de código, como demostrado a seguir.
