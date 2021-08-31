@@ -99,3 +99,22 @@ public class EmailService {
 Diante do código apresentado é possível identificar que a classe ``EmailService`` tem mais de uma responsabilidade. Além da classe estar encarregada de realizar a configuração da autenricação do email da empresa através da classe ``Properties`` para realizar o envio do email. Essa classe também realiza a conexão, acesso e consulta ao banco de dados do sistema web para recuperar o email do cliente desejado.
 
 Sendo que, as responsabilidades de um bloco de código esta atrelada aos papeis que as pessoas desempenham no desenvolvimento de software. A classe apresentada é manuseada por dois grupos diferentes de pessoas encarregadas deste sistema web, o time de marketing que administra o envio de emails e o time de banco de dados que administra toda a arquitetura do banco. O manuseio desta classe com multiplas responsabilidades por dois times diferentes durante o desenvolvimento deste sistema pode ocasionar em varios encadeamentos de bug não esperados. Portanto, é desejado que as multiplas responsabilidades desta classe sejam quebradas em multiplos módulos de código, como demostrado a seguir.
+
+## Acesso, Conexão e Consulta ao Banco de Dados
+A fim de isolar a manuseio do BD da classe ``EmailReceiver``, foi utilizado o principio de DAO, que implica na utilização de uma classe para armazenar as informaçõe de uma tabela e outra classe DAO que realização a conexão e realiza o update, delete e insert na tabela. Diante disso, tem-se o seguinte código resultante da classe ``EmailReceier``, ``Cliente`` e ``ClienteDAO``.
+
+- Código
+
+## Envio do Email ao Cliente
+A classe ´´EmailSender´´ tem a resposabilidade de realizar a autenticação a conta de email da empresa, e enviar o email desejado ao email recebido como entrada do método ´´send´´´. Além disso, agora o método ``send`` não mais recebe o ID do cliente, mas sim o email para que essa classe não tenha conhecimento de como funciona a consulta ao cliente que não pertece ao seu escopo.
+
+- Código
+
+## Classe Principal
+Com isso, a classe pricipal fica responsavel por realizar a chamada do ``ClientDAO`` para retornar o email do cliente e realizar a instanciação da classe ``EmailSender`` e a chamada do método ``send(email)`` para efetuar o envio do email.
+
+- Código
+
+Atavés desta refatoração do código, os dois times de desenvolvimento estão responsaveis por partes distitntas do sistema, sendo cada classe apresentada tém uma das responsabilidade geradas pela realização desta tarefa.
+
+## Conclusão
