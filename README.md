@@ -10,10 +10,10 @@ O desenvolvimento de softwares orientados em larga escla apresenta dificuldades 
 ## Princípio da Resposabilidade Única
 O SRP reza que todo módulo de código desenvolvido deve possuir apenas uma responsabilidade com relação as funcionalidade do programa, apresentando assim apenas um eixo de mudança. Os programas desenvolvidas com esse principio apresentam alta coesão e baixo acoplamento dado a especificidade dos blocos de código produzidos. Sendo assim, a manutenção destes programas será facilitados devido a baixa interdependência entre os diversos blocos de código e focalização das responsabilidade de cada bloco. Esses módulos podem ser melhor reutilizados com menores chances de encadeamento de erros, visto que o programa estará melhor organizado em módulos bem definidos.
 
-Entretanto, a aplicação deste postulado pode ser complicada, sendo muito dependente da experiencia do programador para a detecção de responsabilidades no âmbito do programa em desenvolvimento. Como por exemplo, muitas vezes para duas pessoas diferentes, um mesmo bloco de código pode possuir um numero diferente de responsabilidades, sendo que as experiencias dessas duas pessoas na área podem ser diferentes, produzindo visões diferentes de uma mesma solução. Diante disso, dentro do desenvolvimento de software é possível ocorrer a má utilização do SRP, como por exemplo nesta classe ''EmailSender'', que funciona para enviar emails a clientes em um sistema web de compras online.
+Entretanto, a aplicação deste postulado pode ser complicada, sendo muito dependente da experiencia do programador para a detecção de responsabilidades no âmbito do programa em desenvolvimento. Como por exemplo, muitas vezes para duas pessoas diferentes, um mesmo bloco de código pode possuir um numero diferente de responsabilidades, sendo que as experiencias dessas duas pessoas na área podem ser diferentes, produzindo visões duas de uma mesma solução. Isso pode ser, visualizado na classe ``EmailSender`` a seguir.
 
 ```Java
-...
+//...
 // Classe que envia um email da compra de um cliente para ele.
 public class EmailService {
 
