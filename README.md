@@ -244,7 +244,7 @@ public class EmailService {
 }
 ```
 
-## Classe Principal
+## Utilização do Serviço
 Por fim, a classe ``EmailService`` esta respeitando o SRP, sendo assim, esse serviço de envio de email para a confirmação de compra pode ser reutilizado dentro do sistema web ou em outros projetos caso desejado. Nesta classe ``Principal`` é exemplificado a utilização deste serviço. Inicialmente, é feito a chamada do método ``ClienteDAO.buscar(clienteId)`` para obter as informações do cliente, dentre elas o email desejado, e a chamada do método ``EmailService.send(new InternetAddress("empresa@email.com"), new InternetAddress(cliente.getEmail))`` para efetuar o envio do email de confirmação da compra.
 
 ```Java
@@ -268,5 +268,5 @@ public class Principal {
 }
 
 ```
-
+## Conclusão
 Através da análise inicial da classe ``EmailService``, foram identificadas as múltiplas responsabilidades ligadas a essa classe, e assim também, os múltiplos times de desenvolvimento que estariam encarregados de realizar a manutenção desta classe. Diante disso, mostrou-se necessário a refatoração da classe a fim de evitar a ocorrência de erros inesperados no sistema, aplicando o SRP. Importante destacar que, o SRP é um **principio** e não uma lei no desenvolvimento de software, entretanto, a sua não utilização em um projeto deve ser devidamente justificada e elicitada no documento de requisitos do projeto. Por fim, os dois times de desenvolvimento estão responsáveis por partes distintas do sistema, sendo que cada classe apresentada tem uma única responsabilidade.
