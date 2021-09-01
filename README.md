@@ -151,71 +151,6 @@ public class ClienteDAO {
 	}
 
 	// Implementacao do CRUD...
-	// Create
-	public void insere(Cliente cliente) {
-		
-		String consultaSql = "INSERT INTO CLIENTE (ID, NOME, CPF, EMAIL, SENHA) VALUES(?, ?, ?, ?, ?)";
-
-		try {
-			Connection conexao = this.getConnection();
-			PreparedStatement stream = conexao.prepareStatement(consultaSql, Statement.RETURN_GENERATED_KEYS);
-
-			stream = conexao.prepareStatement(sql);
-			stream.setString(1, cliente.getId());
-			stream.setString(2, cliente.getNome());
-			stream.setString(2, cliente.getCpf());
-			stream.setString(3, cliente.getEmail());
-			stream.setString(4, cliente.getSenha());
-			stream.executeUpdate();
-
-			stream.close();
-			conexao.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	// Delete
-	public void deleta(Profissional profissional) {
-		String consultaSql = "DELETE FROM CLIENTE WHERE ID = ?";
-
-		try {
-			Connection conexao  = this.getConnection();
-			PreparedStatement stream  = conexao.prepareStatement(consultaSql);
-
-			stream.setString(1, cliente.getId());
-			stream.executeUpdate();
-
-			stream.close();
-			conexao.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	// Update
-	public void atualiza(Profissional profissional) {
-
-		String consultaSql = "UPDATE CLIENTE SET NOME = ?, CPF = ?, EMAIL = ?, SENHA = ? WHERE ID = ?";
-
-		try {
-			Connection conexao = this.getConnection();
-			PreparedStatement stream = conexao.prepareStatement(consultaSql);
-
-			stream.setString(1, cliente.getNome());
-			stream.setString(2, cliente.getCpf());
-			stream.setString(3, cliente.getEmail());
-			stream.setLong(4, cliente.getSenha());
-			stream.setLong(5, cliente.getId());
-			stream.executeUpdate();
-
-			stream.close();
-			conexao.close();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
 	// Read
 	public Cliente busca(String id) {
 		Cliente cliente = null;
@@ -243,6 +178,9 @@ public class ClienteDAO {
 			throw new RuntimeException(e);
 		}
 	}
+
+// ...
+
 }
 ```
 
