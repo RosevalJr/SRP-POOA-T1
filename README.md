@@ -245,7 +245,7 @@ public class ClienteDAO {
 ```
 
 ## Envio do Email ao Cliente
-A classe ´´EmailSender´´ tem a resposabilidade de realizar a autenticação a conta de email da empresa, e enviar o email desejado ao email recebido como entrada do método ´´send´´´. Além disso, agora o método ``send`` não mais recebe o ID do cliente, mas sim o email para que essa classe não tenha conhecimento de como funciona a consulta ao cliente que não pertece ao seu escopo.
+A classe ``EmailSender`` tem a resposabilidade de realizar a autenticação a conta de email da empresa, e enviar o email desejado ao email recebido como entrada do método ``send``. Além disso, agora o método ``send`` não mais recebe o ID do cliente, mas sim o email para que essa classe não tenha conhecimento de como funciona a consulta ao cliente que não pertece ao seu escopo.
 
 ```Java
 // ...
@@ -329,6 +329,6 @@ public class Principal {
 
 ```
 
-Através da análise inicial da classe ``EmailSender``, foram identificas as múltiplas responsabilidades ligadas a essa classe, e assim também os múltiplos times de desenvolvimento que estariam encarregados de realizar a manutenção desta única classe. Diante disso, foi identificado a necessidade de refatoração da classe a fim de de evitar a ocorrência de erros inesperados no sistema. Importante destacar que, o SRP é um *principio* e não uma lei no desenvolvimento de software, entretanto, a sua não utilização em um projeto deve ser devidamente justificada e elicitada no documento de requisitos do projeto. Por fim, os dois times de desenvolvimento estão responsaveis por partes distitntas do sistema, sendo cada classe apresentada tém uma das responsabilidade geradas pela realização desta tarefa.
+Através da análise inicial da classe ``EmailSender``, foram identificas as múltiplas responsabilidades ligadas a essa classe, e assim também os múltiplos times de desenvolvimento que estariam encarregados de realizar a manutenção desta única classe. Diante disso, foi identificado a necessidade de refatoração da classe a fim de evitar a ocorrência de erros inesperados no sistema. Importante destacar que, o SRP é um *principio* e não uma lei no desenvolvimento de software, entretanto, a sua não utilização em um projeto deve ser devidamente justificada e elicitada no documento de requisitos do projeto. Por fim, os dois times de desenvolvimento estão responsaveis por partes distitntas do sistema, sendo cada classe apresentada tém uma das responsabilidade geradas pela realização desta tarefa.
 
 ## Conclusão -> Talvez não
