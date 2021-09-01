@@ -12,7 +12,7 @@ O desenvolvimento de softwares orientados em larga escla apresenta dificuldades 
 ## Princípio da Resposabilidade Única
 O SRP reza que todo módulo de código desenvolvido deve possuir apenas uma responsabilidade com relação as funcionalidade do programa, apresentando assim apenas um eixo de mudança. Os programas desenvolvidas com esse principio apresentam alta coesão e baixo acoplamento dado a especificidade dos blocos de código produzidos. Sendo assim, a manutenção destes programas será facilitados devido a baixa interdependência entre os diversos blocos de código e focalização das responsabilidade de cada bloco. Esses módulos podem ser melhor reutilizados com menores chances de encadeamento de erros, visto que o programa estará melhor organizado em módulos bem definidos.
 
-Entretanto, a aplicação deste postulado pode ser complicada, sendo muito dependente da experiencia do programador para a detecção de responsabilidades no âmbito do programa em desenvolvimento. Como por exemplo, muitas vezes para duas pessoas diferentes, um mesmo bloco de código pode possuir um numero diferente de responsabilidades, sendo que as experiencias dessas duas pessoas na área podem ser diferentes, produzindo visões duas de uma mesma solução. Isso pode ocasionar o desenvolvimento de classes com multiplas resposanbilidades, como pode ser observado na classe ``EmailService``, encarregada de enviar um email para clientes de um sistema web de compras online.
+Entretanto, a aplicação deste postulado pode ser complicada, sendo muito dependente da experiência do programador para a detecção de responsabilidades no âmbito do programa em desenvolvimento. Como por exemplo, um programador pouco experiente que está trabalhando com um produto a não muito tempo, não tem em mente ainda as necessidades e características deste produto. Isso pode acarretar o desenvolvimento de classes com múltiplas responsabilidades, como pode ser observado no exemplo apresentado a seguir da classe ``EmailService``, encarregada de enviar emails para clientes de um sistema web de compras online.
 
 ```Java
 //...
@@ -97,12 +97,12 @@ public class EmailService {
 	}
 }
 ```
-Diante do código apresentado é possível identificar que a classe ``EmailService`` tem mais de uma responsabilidade. Além da classe estar encarregada de realizar a configuração da autenricação do email da empresa através da classe ``Properties`` para realizar o envio do email. Essa classe também realiza a conexão, acesso e consulta ao banco de dados do sistema web para recuperar o email do cliente desejado.
+Diante do código apresentado, é possível identificar que a classe ``EmailService`` possui mais de uma responsabilidade, ferindo então o SRP. Essa classe está encarregada de realizar a autenticação do email da empresa para realizar o envio do email ao cliente, e realizar a conexão, acesso e consulta ao banco de dados do sistema web a fim de recuperar o email do cliente desejado.
 
-Sendo que, as responsabilidades de um bloco de código esta atrelada aos papeis que as pessoas desempenham no desenvolvimento de software. A classe apresentada é manuseada por dois grupos diferentes de pessoas encarregadas deste sistema web, o time de marketing que administra o envio de emails e o time de banco de dados que administra toda a arquitetura do banco. O manuseio desta classe com multiplas responsabilidades por dois times diferentes durante o desenvolvimento deste sistema pode ocasionar em varios encadeamentos de bug não esperados. Portanto, é desejado que as multiplas responsabilidades desta classe sejam quebradas em multiplos módulos de código, como demostrado a seguir.
+Tendo em vista que, as responsabilidades de um bloco de código estão atreladas aos papéis que os programadores desempenham no desenvolvimento de software. A classe apresentada é manuseada por dois grupos diferentes de programadores encarregados deste sistema web, o time de marketing que administra o envio de emails e o time de banco de dados que administra o banco e toda sua arquitetura. A manutenção desta classe com múltiplas responsabilidades por dois times diferentes durante o desenvolvimento deste sistema pode desencadear em erros não esperados. Portanto, é desejado que as múltiplas responsabilidades desta classe sejam quebradas em múltiplos módulos de código para respeitar o SRP, como demonstrado a seguir.
 
 ## Acesso, Conexão e Consulta ao Banco de Dados
-A fim de isolar a manuseio do BD da classe ``EmailReceiver``, foi utilizado o principio de DAO, que implica na utilização de uma classe para armazenar as informaçõe de uma tabela e outra classe DAO que realização a conexão e realiza o update, delete e insert na tabela. Diante disso, tem-se o seguinte código resultante da classe ``EmailReceier``, ``Cliente`` e ``ClienteDAO``.
+A fim de isolar a responsabilidade de conexão e acesso ao banco de dados do sistema, foi utilizado o princípio de Objeto de Acesso a Dados (DAO), que implica na separação das regras de negócio das regras de acesso ao banco de dados. Diante disso, com o isolamento desta responsabilidade, foi produzida a classe ``Cliente`` para encapsular os dados da tabela Cliente e a classe``ClienteDAO`` que realiza a conexão ao banco de dados e a atualização, exclusão e inserção de tuplas à tabela Cliente.
 
 ```Java
 // ...
@@ -185,7 +185,7 @@ public class ClienteDAO {
 ```
 
 ## Envio do Email ao Cliente
-A classe ``EmailSender`` tem a resposabilidade de realizar a autenticação a conta de email da empresa, e enviar o email desejado ao email recebido como entrada do método ``send``. Além disso, agora o método ``send`` não mais recebe o ID do cliente, mas sim o email para que essa classe não tenha conhecimento de como funciona a consulta ao cliente que não pertece ao seu escopo.
+Agora, é possível isolar a responsabilidade de envio de emails aos clientes. Sendo assim, foi produzida a classe ``EmailSender`` que realiza a autenticação da conta de email da empresa, e envia um email de confirmação de compra ao email especificado. Além disso, agora o método ``send`` não mais recebe o ID do cliente, mas sim o email para que essa classe não tenha conhecimento de como funciona a consulta a cliente que não pertence ao seu escopo.
 
 ```Java
 // ...
@@ -245,7 +245,7 @@ public class EmailService {
 ```
 
 ## Classe Principal
-Com isso, a classe pricipal fica responsavel por realizar a chamada do ``ClientDAO`` para retornar o email do cliente e realizar a instanciação da classe ``EmailSender`` e a chamada do método ``send(email)`` para efetuar o envio do email.
+Por fim, a classe ``EmailSender`` esta respeitando o SRP, sendo assim, esse serviço de envio de email para a confirmação de compra pode ser reutilizado dentro do sistema web ou em outros projetos caso desejado. Nesta classe ``Principal`` é exemplificado a utilização deste serviço. Inicialmente, é feito a chamada do método ``ClienteDAO.buscar(clienteID)`` para obter as informações do cliente, dentre elas o email desejado, e a chamada do método ``EmailSender.send(Cliente.getEmail())`` para efetuar o envio do email de confirmação da compra.
 
 ```Java
 
@@ -269,6 +269,4 @@ public class Principal {
 
 ```
 
-Através da análise inicial da classe ``EmailSender``, foram identificas as múltiplas responsabilidades ligadas a essa classe, e assim também os múltiplos times de desenvolvimento que estariam encarregados de realizar a manutenção desta única classe. Diante disso, foi identificado a necessidade de refatoração da classe a fim de evitar a ocorrência de erros inesperados no sistema. Importante destacar que, o SRP é um **principio** e não uma lei no desenvolvimento de software, entretanto, a sua não utilização em um projeto deve ser devidamente justificada e elicitada no documento de requisitos do projeto. Por fim, os dois times de desenvolvimento estão responsaveis por partes distitntas do sistema, sendo cada classe apresentada tém uma das responsabilidade geradas pela realização desta tarefa.
-
-## Conclusão -> Talvez não
+Através da análise inicial da classe ``EmailSender``, foram identificadas as múltiplas responsabilidades ligadas a essa classe, e assim também, os múltiplos times de desenvolvimento que estariam encarregados de realizar a manutenção desta classe. Diante disso, mostrou-se necessário a refatoração da classe a fim de evitar a ocorrência de erros inesperados no sistema, aplicando o SRP. Importante destacar que, o SRP é um **principio** e não uma lei no desenvolvimento de software, entretanto, a sua não utilização em um projeto deve ser devidamente justificada e elicitada no documento de requisitos do projeto. Por fim, os dois times de desenvolvimento estão responsáveis por partes distintas do sistema, sendo que cada classe apresentada tem uma única responsabilidade.
