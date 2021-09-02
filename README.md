@@ -132,7 +132,6 @@ public class Cliente {
 ```
 ```Java
 // ...
-
 // Essa classe esta responsavel pelo CRUD da classe Cliente.
 public class ClienteDAO {
 
@@ -160,7 +159,7 @@ public class ClienteDAO {
 
 		try {
 			Connection conexao = this.getConnection();
-			PreparedStatement stream = conexao.prepareStatement(sql);
+			PreparedStatement stream = conexao.prepareStatement(consultaAql);
 
 			stream.setString(1, id);
 			ResultSet resultados = stream.executeQuery();
