@@ -63,7 +63,6 @@ public class EmailService {
 				stat.setLong(1, clienteID);
 				ResultSet resultados = stat.executeQuery();
 				if (resultados.next()) {
-					nomeCliente = resultados.getString("nome");
 					emailCliente = resultados.getString("email");
 				}
 
