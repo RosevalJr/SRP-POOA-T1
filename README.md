@@ -52,7 +52,7 @@ public class EmailService {
 				throw new RuntimeException(e);
 			}
 
-			// Realiza a consulta das informacoes necessarias do cliente (email) 
+			// Realiza a consulta do email do cliente 
 			String consultaSql = "SELECT * FROM CLIENTE WHERE ID = ?";
 			String nomeCliente = null, emailCliente = null;
 
