@@ -10,7 +10,7 @@
 O desenvolvimento de softwares orientados a objetos em larga escla apresenta dificuldades intrínsecas à alta complexidade desta atividade. Diante disso, Robert C. Martin (Uncle Bob) buscou elicitar um conjunto de postulados a serem seguidos na arquiteturação de softwares orientados a objetos a fim de facilitar o entendimento e desenvolvimento destes programas. Com isso, surgiu-se o termo SOLID como um acrônimo dos cinco postulados de design de programação, destinados ao desenvolvimento de softwares com maior flexibilidade de extensão e manutenção. Neste artigo, será feita a apresentação do **[S]** *Single Resposability Principle* (SRP) como o primeiro principio SOLID por meio da explicação conceitual do postulado e exemplificação de sua aplicação.
 
 ## Princípio da Resposabilidade Única
-O SRP reza que todo módulo de código desenvolvido deve possuir apenas uma responsabilidade com relação as funcionalidade do programa, apresentando assim apenas um eixo de mudança. Os programas desenvolvidas com esse principio apresentam alta coesão e baixo acoplamento dado a especificidade dos blocos de código produzidos. Sendo assim, a manutenção destes programas será facilitados devido a baixa interdependência entre os diversos blocos de código e focalização das responsabilidade de cada bloco. Esses módulos podem ser melhor reutilizados com menores chances de encadeamento de erros, visto que o programa estará melhor organizado em módulos bem definidos.
+O SRP reza que todo módulo de código desenvolvido deve possuir apenas uma responsabilidade com relação as funcionalidade do programa, apresentando assim apenas um eixo de mudança. Os programas desenvolvidas com esse principio apresentam alta coesão e baixo acoplamento dado a especificidade dos blocos de código produzidos. Sendo assim, a manutenção destes programas será facilitada devido a baixa interdependência e focalização das responsabilidade de cada bloco. Esses módulos podem ser melhor reutilizados com menores chances de encadeamento de erros, visto que o programa estará melhor organizado em módulos bem definidos.
 
 Entretanto, a aplicação deste postulado pode ser complicada, sendo muito dependente da experiência do programador para a detecção de responsabilidades no âmbito do programa em desenvolvimento. Como por exemplo, um programador pouco experiente que está trabalhando com um produto a não muito tempo, não tem em mente ainda as necessidades e características deste produto. Isso pode acarretar o desenvolvimento de classes com múltiplas responsabilidades, como pode ser observado no exemplo apresentado a seguir da classe ``EmailService``, encarregada de enviar emails para clientes de um sistema web de compras online.
 
@@ -99,7 +99,7 @@ public class EmailService {
 ```
 Diante do código apresentado, é possível identificar que a classe ``EmailService`` possui mais de uma responsabilidade, ferindo então o SRP. Essa classe está encarregada de realizar a autenticação do email da empresa para realizar o envio do email ao cliente, e realizar a conexão, acesso e consulta ao banco de dados do sistema web a fim de recuperar o email do cliente desejado.
 
-Tendo em vista que, as responsabilidades de um bloco de código estão atreladas aos papéis que os programadores desempenham no desenvolvimento de software. A classe apresentada é manuseada por dois grupos diferentes de programadores encarregados deste sistema web, o time de marketing que administra o envio de emails e o time de banco de dados que administra o banco e toda sua arquitetura. A manutenção desta classe com múltiplas responsabilidades por dois times diferentes durante o desenvolvimento deste sistema pode desencadear em erros não esperados. Portanto, é desejado que as múltiplas responsabilidades desta classe sejam quebradas em múltiplos módulos de código para respeitar o SRP, como demonstrado a seguir.
+Tendo em vista que, as responsabilidades de um bloco de código estão atreladas aos papéis que os programadores desempenham no desenvolvimento de software. A classe apresentada é mantida por dois grupos diferentes de programadores encarregados deste sistema web, o time de marketing que administra o envio de emails e o time de banco de dados que administra o banco e toda sua arquitetura. A manutenção desta classe com múltiplas responsabilidades por dois times diferentes durante o desenvolvimento deste sistema pode desencadear em erros não esperados. Portanto, é desejado que as múltiplas responsabilidades desta classe sejam quebradas em múltiplos módulos de código para respeitar o SRP, como demonstrado a seguir.
 
 ## Acesso, Conexão e Consulta ao Banco de Dados
 A fim de isolar a responsabilidade de conexão e acesso ao banco de dados do sistema, foi utilizado o princípio de Objeto de Acesso a Dados (DAO), que implica na separação das regras de negócio das regras de acesso ao banco de dados. Diante disso, com o isolamento desta responsabilidade, foi produzida a classe ``Cliente`` para encapsular os dados da tabela Cliente e a classe ``ClienteDAO`` que realiza a conexão ao banco de dados e a atualização, exclusão e inserção de tuplas à tabela Cliente.
@@ -185,7 +185,7 @@ public class ClienteDAO {
 ```
 
 ## Envio do Email ao Cliente
-Agora, é possível isolar a responsabilidade de envio de emails aos clientes. Sendo assim, foi produzida a classe ``EmailService`` que realiza a autenticação da conta de email da empresa, e envia um email de confirmação de compra ao email especificado. Além disso, agora o método ``send`` não mais recebe o ID do cliente, mas sim o email para que essa classe não tenha conhecimento de como funciona a consulta a cliente que não pertence ao seu escopo.
+Agora, é possível isolar a responsabilidade de envio de emails aos clientes. Sendo assim, foi produzida a classe ``EmailService`` que realiza a autenticação da conta de email da empresa, e envia um email de confirmação de compra ao email especificado. Além disso, agora o método ``send`` não mais recebe o ID do cliente, mas sim o email para que essa classe não tenha conhecimento de como funciona a consulta a cliente, que não pertence ao seu escopo.
 
 ```Java
 // ...
@@ -245,7 +245,7 @@ public class EmailService {
 ```
 
 ## Utilização do Serviço
-Por fim, a classe ``EmailService`` esta respeitando o SRP, sendo assim, esse serviço de envio de email para a confirmação de compra pode ser reutilizado dentro do sistema web ou em outros projetos caso desejado. Nesta classe ``Principal`` é exemplificado a utilização deste serviço. Inicialmente, é feito a chamada do método ``ClienteDAO.buscar(clienteId)`` para obter as informações do cliente, dentre elas o email desejado, e a chamada do método ``EmailService.send(new InternetAddress("empresa@email.com"), new InternetAddress(cliente.getEmail))`` para efetuar o envio do email de confirmação da compra.
+Por fim, a classe ``EmailService`` esta respeitando o SRP, sendo assim, esse serviço de envio de email para a confirmação de compra pode ser reutilizado dentro do sistema web ou em outros projetos caso desejado. Nesta classe ``Principal`` é exemplificado a utilização deste serviço. Inicialmente, é feito a chamada do método ``ClienteDAO.buscar(clienteId)`` para obter as informações do cliente, dentre elas o email desejado, e a chamada do método ``EmailService.send(new InternetAddress("empresa@email.com"), new InternetAddress(cliente.getEmail()))`` para efetuar o envio do email de confirmação da compra.
 
 ```Java
 
@@ -263,7 +263,7 @@ public class Principal {
 		// Tratando como se ja tivesse identificado o id do cliente que será enviado o email.
 		
 		Cliente cliente = dao.buscar(clienteId);
-		emailSender.send(new InternetAddress("empresa@email.com"), new InternetAddress(cliente.getEmail));
+		emailSender.send(new InternetAddress("empresa@email.com"), new InternetAddress(cliente.getEmail()));
 	}
 }
 
