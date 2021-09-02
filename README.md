@@ -183,20 +183,17 @@ public class ClienteDAO {
 }
 ```
 
-## Envio do Email ao Cliente
-Agora, é possível isolar a responsabilidade de envio de emails aos clientes. Sendo assim, foi produzida a classe ``EmailService`` que realiza a autenticação da conta de email da empresa, e envia um email de confirmação de compra ao email especificado. Além disso, agora o método ``send`` não mais recebe o ID do cliente, mas sim o email para que essa classe não tenha conhecimento de como funciona a consulta a cliente, que não pertence ao seu escopo.
+### Envio do Email ao Cliente
+Agora, é possível isolar a responsabilidade de envio de emails aos clientes. Sendo assim, foi produzida a classe ``EmailService`` que realiza a autenticação da conta de email da empresa, e envia um email de confirmação de compra ao email especificado. Além disso, agora o método ``send`` não mais recebe o ID do cliente, mas sim o seu email, para que essa classe não tenha conhecimento de como funciona a consulta a cliente que foge do escopo especificado à essa classe.
 
 ```Java
 // ...
-
 // Classe que envia um email da compra do cliente para ele.
 public class EmailService {
-
 
 	public void send(InternetAddress empresaEmail, InternetAddress clienteEmail) {
 
 		try {
-
 			// Carregando o arquivo de propriedades do projeto
 			Properties propriedades = new Properties();
 			InputStream  streamPropriedades = EmpresaController.class.getClassLoader().
