@@ -188,7 +188,7 @@ Agora, é possível isolar a responsabilidade de envio de emails aos clientes. S
 
 ```Java
 // ...
-// Classe que envia um email da compra do cliente para ele.
+// Classe que envia um email de confirmação de compra ao cliente.
 public class EmailService {
 
 	public void send(InternetAddress empresaEmail, InternetAddress clienteEmail) {
@@ -223,8 +223,7 @@ public class EmailService {
 			message.setSubject("Compra efetuada");
 
 			MimeBodyPart mimeBodyPart = new MimeBodyPart();
-			mimeBodyPart.setContent("Olá " + nomeCliente + ", 
-			    sua compra nesta loja foi efetuada com sucesso!", "text/plain");
+			mimeBodyPart.setContent("Olá\n" + "Sua compra foi efetuada com sucesso!", "text/plain");
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(mimeBodyPart);
