@@ -16,7 +16,7 @@ Entretanto, a aplicação deste princípio pode ser complicada, sendo muito depe
 
 ```Java
 //...
-// Classe que envia um email da compra de um cliente para ele.
+// Classe que envia um email de confirmação de compra ao cliente.
 public class EmailService {
 
 	public void send(InternetAddress empresaEmail, String clienteID) {
@@ -34,7 +34,7 @@ public class EmailService {
 				throw new FileNotFoundException("config.properties não encontrado!");
 			}
 
-			// Inicializa sessao com email da empresa para o envio
+			// Inicializa sessão com email da empresa para o envio
 			String login = propriedades.getProperty("login");
 			String senha = propriedades.getProperty("senha");
 
@@ -45,14 +45,14 @@ public class EmailService {
 				}
 			});
 
-			// Realiza a conexao ao sql server.
+			// Realiza a conexao ao sql server
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
 			} catch (ClassNotFoundException e) {
 				throw new RuntimeException(e);
 			}
 
-			// Realiza a consulta das informacoes necessarias do cliente (email e nome) 
+			// Realiza a consulta das informacoes necessarias do cliente (email) 
 			String consultaSql = "SELECT * FROM CLIENTE WHERE ID = ?";
 			String nomeCliente = null, emailCliente = null;
 
@@ -81,7 +81,7 @@ public class EmailService {
 			message.setSubject("Compra efetuada");
 
 			MimeBodyPart mimeBodyPart = new MimeBodyPart();
-			mimeBodyPart.setContent("Olá " + nomeCliente + ", compra efetuada com sucesso!", "text/plain");
+			mimeBodyPart.setContent("Olá.\n" + "Sua compra foi efetuada com sucesso!", "text/plain");
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(mimeBodyPart);
