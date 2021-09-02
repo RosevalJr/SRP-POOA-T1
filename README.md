@@ -201,7 +201,8 @@ public class EmailService {
 
 			// Carregando o arquivo de propriedades do projeto
 			Properties propriedades = new Properties();
-			InputStream  streamPropriedades = EmpresaController.class.getClassLoader().getResourceAsStream("config.properties");
+			InputStream  streamPropriedades = EmpresaController.class.getClassLoader().
+			    getResourceAsStream("config.properties");
 
 			if (streamPropriedades != null) {
 				propriedades.load(streamPropriedades);
