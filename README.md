@@ -14,7 +14,7 @@ O SRP reza que todo módulo de código desenvolvido deve possuir apenas uma resp
 
 Entretanto, a aplicação deste princípio pode ser complicada, sendo muito dependente da experiência do programador para a detecção de responsabilidades no âmbito do programa em desenvolvimento. Como por exemplo, um programador pouco experiente que está trabalhando com um produto a não muito tempo, não tem em mente ainda as necessidades e características deste produto. Isso pode acarretar o desenvolvimento de classes com múltiplas responsabilidades, como pode ser observado no exemplo apresentado a seguir da classe ``EmailService``, encarregada de enviar emails para clientes de um sistema web de compras online.
 
-### Quebra do Princípio de Responsabilidade Ùnica
+### Quebra do Princípio da Responsabilidade Ùnica
 Diante do código apresentado a seguir, é possível identificar que a classe ``EmailService`` possui mais de uma responsabilidade, ferindo então o SRP. Essa classe está encarregada de autenticar o email da empresa para realizar o envio do email ao cliente, e efetuar a conexão e consulta ao banco de dados do sistema web a fim de recuperar o email do cliente desejado. 
 
 ```Java
