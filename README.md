@@ -228,8 +228,8 @@ public class EmailService {
 
 			// Inicializando o envio do email 
 			Message message = new MimeMessage(session);
-			message.setFrom(empresaEmail); // empresa envia o email
-			message.setRecipient(Message.RecipientType.TO, clienteEmail); // cliente recebe o email
+			message.setFrom(new InternetAddress("empresaEmail")); // empresa envia o email
+			message.setRecipient(Message.RecipientType.TO, new InternetAddress("clienteEmail")); // cliente recebe o email
 			message.setSubject("Compra efetuada");
 
 			MimeBodyPart mimeBodyPart = new MimeBodyPart();
