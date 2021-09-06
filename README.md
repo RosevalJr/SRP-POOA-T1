@@ -70,12 +70,12 @@ public class EmailService {
 
 			// Inicializando o envio do email 
 			Message message = new MimeMessage(session);
-			message.setFrom("empresa@email.com"); // empresa envia o email
+			message.setFrom(empresaEmail); // empresa envia o email
 			message.setRecipient(Message.RecipientType.TO, emailCliente); // cliente recebe o email
 			message.setSubject("Compra efetuada");
 
 			MimeBodyPart mimeBodyPart = new MimeBodyPart();
-			mimeBodyPart.setContent("Olá.\n" + "Sua compra foi efetuada com sucesso!", "text/plain");
+			mimeBodyPart.setContent("Olá,\n" + "Sua compra foi efetuada com sucesso!", "text/plain");
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(mimeBodyPart);
@@ -237,7 +237,7 @@ public class EmailService {
 			message.setSubject("Compra efetuada");
 
 			MimeBodyPart mimeBodyPart = new MimeBodyPart();
-			mimeBodyPart.setContent("Olá\n" + "Sua compra foi efetuada com sucesso!", "text/plain");
+			mimeBodyPart.setContent("Olá, \n" + "Sua compra foi efetuada com sucesso!", "text/plain");
 
 			Multipart multipart = new MimeMultipart();
 			multipart.addBodyPart(mimeBodyPart);
