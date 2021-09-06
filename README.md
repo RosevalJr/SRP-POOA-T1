@@ -142,7 +142,7 @@ public class Cliente {
 ```
 ```Java
 // ...
-// Essa classe esta responsavel pelo CRUD da classe Cliente.
+// Essa classe esta responsavel pelo CRUD da tabela Cliente.
 public class ClienteDAO {
 
 	// Construtor que apenas realiza a conexao ao driver jdbc
