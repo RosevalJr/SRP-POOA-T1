@@ -112,7 +112,7 @@ public class Principal {
 Tendo em vista que, as responsabilidades de um bloco de código estão atreladas aos papéis que os programadores desempenham no desenvolvimento de software. A classe ``EmailService`` é mantida por dois grupos diferentes de programadores encarregados deste sistema web, o time de marketing que administra o envio de emails e o time de banco de dados que administra o banco e toda sua arquitetura. A manutenção desta classe com múltiplas responsabilidades por dois times diferentes pode desencadear erros não esperados. Portanto, é desejado que as múltiplas responsabilidades desta classe sejam quebradas em múltiplos módulos de código para respeitar o SRP, como demonstrado a seguir.
 
 ### Conexão e Consulta ao Banco de Dados
-A fim de isolar a responsabilidade de conexão e acesso ao banco de dados do sistema, foi utilizado o princípio de Objeto de Acesso a Dados (DAO), que implica na separação das regras de negócio das regras de acesso ao banco de dados. Assim, com o isolamento desta responsabilidade, foi produzida a classe ``Cliente`` para encapsular os dados da tabela cliente e a classe ``ClienteDAO`` que realiza a conexão ao banco de dados e a atualização, exclusão e inserção de tuplas à tabela cliente.
+A fim de isolar a responsabilidade de conexão e consulta ao banco de dados do sistema, foi utilizado o princípio de Objeto de Acesso a Dados (DAO), que implica na separação das regras de negócio das regras de acesso ao banco de dados. Assim, com o isolamento desta responsabilidade, foi produzida a classe ``Cliente`` para encapsular os dados da tabela cliente e a classe ``ClienteDAO`` que realiza a conexão ao banco de dados e a atualização, exclusão e inserção de tuplas à tabela cliente.
 
 ```Java
 // ...
