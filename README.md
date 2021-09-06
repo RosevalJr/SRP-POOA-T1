@@ -201,7 +201,7 @@ Agora, é possível isolar a responsabilidade de envio de emails aos clientes. S
 // Classe que envia um email de confirmação de compra ao cliente.
 public class EmailService {
 
-	public void send(InternetAddress empresaEmail, InternetAddress clienteEmail) {
+	public void send(String empresaEmail, String clienteEmail) {
 
 		try {
 			// Carregando o arquivo de propriedades do projeto
