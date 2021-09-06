@@ -252,7 +252,7 @@ public class EmailService {
 ```
 
 ### Utilização do Serviço
-Por fim, agora a classe ``EmailService`` está respeitando o SRP, sendo assim, esse serviço de envio de email para a confirmação de compra pode ser reutilizado dentro do sistema web ou em outros projetos caso desejado. Nesta classe ``Principal`` é exemplificado a utilização deste serviço. Inicialmente, é feito a chamada do método ``ClienteDAO.buscar(clienteId)`` para obter as informações do cliente, dentre elas o email desejado, e a chamada do método ``EmailService.send(new InternetAddress("empresa@email.com"), new InternetAddress(cliente.getEmail()))`` para efetuar o envio do email de confirmação da compra.
+Por fim, agora a classe ``EmailService`` está respeitando o SRP, sendo assim, esse serviço de envio de email para a confirmação de compra pode ser reutilizado dentro do sistema web ou em outros projetos caso desejado. Nesta classe ``Principal`` é exemplificado a utilização deste serviço. Inicialmente, é feito a chamada do método ``ClienteDAO.buscar(clienteId)`` para obter as informações do cliente, dentre elas o email desejado, e a chamada do método ``EmailService.send("empresa@email.com", cliente.getEmail())`` para efetuar o envio do email de confirmação da compra.
 
 ```Java
 // ...
