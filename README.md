@@ -100,13 +100,11 @@ Esses indícios da presença de múltiplas responsabilidades na classe ``EmailSe
 // Classe que demonstra o envio de um email de confirmação de compra ao cliente.
 public class Principal {
 
-	EmailService email = new EmailService();
-
 	public static void main(String[] args){
 
 		// ...
 		// Tratando como se ja tivesse identificado o id do cliente que será enviado o email.
-		
+		EmailService email = new EmailService();
 		email.send(new InternetAddress("empresa@email.com"), clienteId);
 	}
 }
@@ -262,14 +260,12 @@ Por fim, agora a classe ``EmailService`` está respeitando o SRP, sendo assim, e
 // Classe que demonstra o envio de um email de confirmação de compra ao cliente.
 public class Principal {
 
-	ClienteDAO dao = new ClienteDAO();
-	EmailService emailSender = new EmailService();
-
 	public static void main(String[] args){
 
 		// ...
 		// Tratando como se ja tivesse identificado o id do cliente que será enviado o email.
-		
+		ClienteDAO dao = new ClienteDAO();
+		EmailService emailSender = new EmailService();
 		Cliente cliente = dao.buscar(clienteId);
 		emailSender.send(new InternetAddress("empresa@email.com"), new InternetAddress(cliente.getEmail()));
 	}
