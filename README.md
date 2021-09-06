@@ -55,7 +55,7 @@ public class EmailService {
 			String consultaSql = "SELECT * FROM CLIENTE WHERE ID = ?";
 			String nomeCliente = null, emailCliente = null;
 
-			Connection conexao = this.getConnection();
+			Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/SISTEMAEMPREGOS", "root", "root");
 			PreparedStatement stat = conexao.prepareStatement(consultaSql);
 
 			stat.setLong(1, clienteID);
