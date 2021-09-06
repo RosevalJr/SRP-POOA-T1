@@ -92,7 +92,7 @@ public class EmailService {
 }
 ```
 
-Esses indícios da presença de múltiplas responsabilidades na classe ``EmailService`` podem ser observados também na utilização do serviço disponibilizado por essa classe, visto que o email do cliente não é passado como entrada na chamada do método ```send```, mas sim o ID do cliente para que o email deste cliente seja retornado com um acesso e consulta ao banco de dados dentro da classe. Portanto, além dessa classe ser responsável por enviar o email, ela também precisa manusear o banco de dados, o que demonstra a presença de múltiplas responsabilidade em uma única classe. A seguir é feito a demonstração da utilização do serviço do envio de email de confirmação da compra do cliente por meio da classe ``Principal``.
+Esses indícios da presença de múltiplas responsabilidades na classe ``EmailService`` podem ser observados também na utilização do serviço disponibilizado por essa classe, visto que o email do cliente não é passado como entrada na chamada do método ```send```, mas sim o ID do cliente para que o email deste cliente seja retornado com um acesso e consulta ao banco de dados dentro da classe. Portanto, além dessa classe ser responsável por enviar o email, ela também precisa manusear o banco de dados, o que demonstra a presença de múltiplas responsabilidade em uma única classe. A seguir é feita a demonstração da utilização do serviço do envio de email de confirmação da compra do cliente por meio da classe ``Principal``.
 
 
 ```Java
