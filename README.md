@@ -97,7 +97,7 @@ public class EmailService {
 	}
 }
 ```
-Diante do código apresentado, é possível identificar que a classe ``EmailService`` possui mais de uma responsabilidade, ferindo então o SRP. Essa classe está encarregada de realizar a autenticação do email da empresa para realizar o envio do email ao cliente, e realizar a conexão, acesso e consulta ao banco de dados do sistema web a fim de recuperar o email do cliente desejado.
+Diante do código apresentado, é possível identificar que a classe ``EmailService`` possui mais de uma responsabilidade, ferindo então o SRP. Essa classe está encarregada de autenticar o email da empresa para realizar o envio do email ao cliente, e efetuar a conexão e consulta ao banco de dados do sistema web a fim de recuperar o email do cliente desejado.
 
 Tendo em vista que, as responsabilidades de um bloco de código estão atreladas aos papéis que os programadores desempenham no desenvolvimento de software. A classe apresentada é mantida por dois grupos diferentes de programadores encarregados deste sistema web, o time de marketing que administra o envio de emails e o time de banco de dados que administra o banco e toda sua arquitetura. A manutenção desta classe com múltiplas responsabilidades por dois times diferentes pode desencadear erros não esperados. Portanto, é desejado que as múltiplas responsabilidades desta classe sejam quebradas em múltiplos módulos de código para respeitar o SRP, como demonstrado a seguir.
 
