@@ -25,6 +25,25 @@ public class EmailService {
 	public void send(InternetAddress empresaEmail, String clienteID) {
 
 		try {
+			// Realiza a conexao ao sql server
+			Class.forName("com.mysql.cj.jdbc.Driver");
+
+			// Realiza a consulta do email do cliente 
+			String consultaSql = "SELECT * FROM CLIENTE WHERE ID = ?";
+			String nomeCliente = null, emailCliente = null;
+
+			Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/SISTEMAEMPREGOS", "root", "root");
+			PreparedStatement stat = conexao.prepareStatement(consultaSql);
+
+			stat.setLong(1, clienteID);
+			ResultSet resultados = stat.executeQuery();
+			if (resultados.next()) {
+				emailCliente = resultados.getString("email");
+			}
+
+			resultados.close();
+			stat.close();
+			conexao.close();
 
 			// Carregando o arquivo de propriedades do projeto
 			Properties propriedades = new Properties();
@@ -47,26 +66,6 @@ public class EmailService {
 					return new PasswordAuthentication(login, senha);
 				}
 			});
-
-			// Realiza a conexao ao sql server
-			Class.forName("com.mysql.cj.jdbc.Driver");
-
-			// Realiza a consulta do email do cliente 
-			String consultaSql = "SELECT * FROM CLIENTE WHERE ID = ?";
-			String nomeCliente = null, emailCliente = null;
-
-			Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/SISTEMAEMPREGOS", "root", "root");
-			PreparedStatement stat = conexao.prepareStatement(consultaSql);
-
-			stat.setLong(1, clienteID);
-			ResultSet resultados = stat.executeQuery();
-			if (resultados.next()) {
-				emailCliente = resultados.getString("email");
-			}
-
-			resultados.close();
-			stat.close();
-			conexao.close();
 
 			// Inicializando o envio do email 
 			Message message = new MimeMessage(session);
