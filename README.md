@@ -49,32 +49,24 @@ public class EmailService {
 			});
 
 			// Realiza a conexao ao sql server
-			try {
-				Class.forName("com.mysql.cj.jdbc.Driver");
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException(e);
-			}
+			Class.forName("com.mysql.cj.jdbc.Driver");
 
 			// Realiza a consulta do email do cliente 
 			String consultaSql = "SELECT * FROM CLIENTE WHERE ID = ?";
 			String nomeCliente = null, emailCliente = null;
 
-			try {
-				Connection conexao = this.getConnection();
-				PreparedStatement stat = conexao.prepareStatement(consultaSql);
+			Connection conexao = this.getConnection();
+			PreparedStatement stat = conexao.prepareStatement(consultaSql);
 
-				stat.setLong(1, clienteID);
-				ResultSet resultados = stat.executeQuery();
-				if (resultados.next()) {
-					emailCliente = resultados.getString("email");
-				}
-
-				resultados.close();
-				stat.close();
-				conexao.close();
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
+			stat.setLong(1, clienteID);
+			ResultSet resultados = stat.executeQuery();
+			if (resultados.next()) {
+				emailCliente = resultados.getString("email");
 			}
+
+			resultados.close();
+			stat.close();
+			conexao.close();
 
 			// Inicializando o envio do email 
 			Message message = new MimeMessage(session);
