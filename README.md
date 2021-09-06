@@ -10,7 +10,7 @@
 O desenvolvimento de softwares orientados a objetos em larga escala apresenta dificuldades devido a alta complexidade de organização desta atividade. Diante disso, Robert C. Martin (Uncle Bob) buscou elicitar um conjunto de princípios a serem seguidos na arquiteturação de softwares orientados a objetos a fim de facilitar o entendimento e desenvolvimento destes programas. Com isso, surgiu-se o termo SOLID como um acrônimo dos cinco princípios de design de programação, destinados ao desenvolvimento de softwares com maior flexibilidade de extensão e manutenção. Neste artigo, será feita a apresentação do **[S]** *Single Resposability Principle* (SRP) como o primeiro princípio SOLID por meio da explicação conceitual e exemplificação de sua aplicação.
 
 ## Princípio da Responsabilidade Única
-O SRP reza que todo módulo de código desenvolvido deve possuir apenas uma responsabilidade com relação as funcionalidade do programa, apresentando assim apenas um eixo de mudança. Os programas desenvolvidas com esse principio apresentam alta coesão e baixo acoplamento dado a especificidade dos blocos de código produzidos. Diante disso, a manutenção destes programas será facilitada devido a baixa interdependência e focalização das responsabilidade de cada bloco. Esses módulos podem ser melhor reutilizados com menores chances de encadeamento de erros, visto que o programa estará melhor organizado em módulos bem definidos.
+O SRP reza que todo módulo de código desenvolvido deve possuir apenas uma responsabilidade com relação às funcionalidades do programa, apresentando assim apenas um eixo de mudança. Os programas desenvolvidos com esse princípio apresentam alta coesão e baixo acoplamento dado a especificidade dos blocos de código produzidos. Diante disso, a manutenção destes programas será facilitada devido a baixa interdependência e focalização da responsabilidade de cada bloco. Esses módulos podem ser melhor reutilizados com menores chances de encadeamento de erros, visto que o programa estará melhor organizado em módulos bem definidos.
 
 Entretanto, a aplicação deste princípio pode ser complicada, sendo muito dependente da experiência do programador para a detecção de responsabilidades no âmbito do programa em desenvolvimento. Como por exemplo, um programador pouco experiente que está trabalhando com um produto a não muito tempo, não tem em mente ainda as necessidades e características deste produto. Isso pode acarretar o desenvolvimento de classes com múltiplas responsabilidades, como pode ser observado no exemplo apresentado a seguir da classe ``EmailService``, encarregada de enviar emails para clientes de um sistema web de compras online.
 
@@ -101,7 +101,7 @@ public class EmailService {
 }
 ```
 
-Esses indicios da presença de multiplas responsabilidades podem ser observados também na utilização do serviço disponibilizado por essa classe, visto que o email do cliente não é passada como entrada na chamada do método ```send```, mas sim o ID do cliente para que o email deste cliente seja retornado com um acesso ao banco de dados dentro da classe. Sendo assim, além dessa classe ser resposavel por enviar o email, ela também precisa manusear o banco de dados, o que demonstra a presenção de multiplas responsabilidade em uma unica classe.
+Esses indícios da presença de múltiplas responsabilidades podem ser observados também na utilização do serviço disponibilizado por essa classe, visto que o email do cliente não é passado como entrada na chamada do método ```send```, mas sim o ID do cliente para que o email deste cliente seja retornado com um acesso ao banco de dados dentro da classe. Sendo assim, além dessa classe ser resposável por enviar o email, ela também precisa manusear o banco de dados, o que demonstra a presença de múltiplas responsabilidade em uma única classe.
 
 
 ```Java
@@ -264,7 +264,7 @@ public class EmailService {
 ```
 
 ### Utilização do Serviço
-Por fim, a classe ``EmailService`` esta respeitando o SRP, sendo assim, esse serviço de envio de email para a confirmação de compra pode ser reutilizado dentro do sistema web ou em outros projetos caso desejado. Nesta classe ``Principal`` é exemplificado a utilização deste serviço. Inicialmente, é feito a chamada do método ``ClienteDAO.buscar(clienteId)`` para obter as informações do cliente, dentre elas o email desejado, e a chamada do método ``EmailService.send(new InternetAddress("empresa@email.com"), new InternetAddress(cliente.getEmail()))`` para efetuar o envio do email de confirmação da compra.
+Por fim, agora a classe ``EmailService`` está respeitando o SRP, sendo assim, esse serviço de envio de email para a confirmação de compra pode ser reutilizado dentro do sistema web ou em outros projetos caso desejado. Nesta classe ``Principal`` é exemplificado a utilização deste serviço. Inicialmente, é feito a chamada do método ``ClienteDAO.buscar(clienteId)`` para obter as informações do cliente, dentre elas o email desejado, e a chamada do método ``EmailService.send(new InternetAddress("empresa@email.com"), new InternetAddress(cliente.getEmail()))`` para efetuar o envio do email de confirmação da compra.
 
 ```Java
 // ...
