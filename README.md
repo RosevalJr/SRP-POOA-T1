@@ -27,14 +27,14 @@ public class EmailService {
 		try {
 			// Realiza a conexao ao sql server
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/SISTEMAEMPREGOS", "root", "root");
+			Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost:3306/SISTEMACOMPRAS", "root", "root");
 
 			// Realiza a consulta do email do cliente 
 			String consultaSql = "SELECT * FROM CLIENTE WHERE ID = ?";
-			String nomeCliente = null, emailCliente = null;
+			String emailCliente = null;
 			PreparedStatement stat = conexao.prepareStatement(consultaSql);
 
-			stat.setLong(1, clienteID);
+			stat.setString(1, clienteID);
 			ResultSet resultados = stat.executeQuery();
 			if (resultados.next()) {
 				emailCliente = resultados.getString("email");
