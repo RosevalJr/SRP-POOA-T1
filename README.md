@@ -22,7 +22,7 @@ Diante do código apresentado a seguir, é possível identificar que a classe ``
 // Classe que envia um email de confirmação de compra ao cliente.
 public class EmailService {
 
-	public void send(InternetAddress empresaEmail, String clienteID) {
+	public void send(String empresaEmail, String clienteID) {
 
 		try {
 			// Realiza a conexao ao sql server
@@ -68,8 +68,8 @@ public class EmailService {
 
 			// Inicializando o envio do email 
 			Message message = new MimeMessage(session);
-			message.setFrom(empresaEmail); // empresa envia o email
-			message.setRecipient(Message.RecipientType.TO, emailCliente); // cliente recebe o email
+			message.setFrom(new InternetAddress("empresa@email.com")); // empresa envia o email
+			message.setRecipient(Message.RecipientType.TO, new InternetAddress(emailCliente)); // cliente recebe o email
 			message.setSubject("Compra efetuada");
 
 			MimeBodyPart mimeBodyPart = new MimeBodyPart();
@@ -104,7 +104,7 @@ public class Principal {
 		// ...
 		// Tratando como se ja tivesse identificado o id do cliente que será enviado o email.
 		EmailService email = new EmailService();
-		email.send(new InternetAddress("empresa@email.com"), clienteId);
+		email.send("empresa@email.com", clienteId);
 	}
 }
 ```
@@ -266,7 +266,7 @@ public class Principal {
 		ClienteDAO dao = new ClienteDAO();
 		EmailService emailSender = new EmailService();
 		Cliente cliente = dao.buscar(clienteId);
-		emailSender.send(new InternetAddress("empresa@email.com"), new InternetAddress(cliente.getEmail()));
+		emailSender.send("empresa@email.com", cliente.getEmail());
 	}
 }
 ```
