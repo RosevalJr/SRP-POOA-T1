@@ -97,7 +97,24 @@ public class EmailService {
 	}
 }
 ```
-Diante do código apresentado, é possível identificar que a classe ``EmailService`` possui mais de uma responsabilidade, ferindo então o SRP. Essa classe está encarregada de autenticar o email da empresa para realizar o envio do email ao cliente, e efetuar a conexão e consulta ao banco de dados do sistema web a fim de recuperar o email do cliente desejado.
+Diante do código apresentado, é possível identificar que a classe ``EmailService`` possui mais de uma responsabilidade, ferindo então o SRP. Essa classe está encarregada de autenticar o email da empresa para realizar o envio do email ao cliente, e efetuar a conexão e consulta ao banco de dados do sistema web a fim de recuperar o email do cliente desejado. A seguir é demonstrado a utilização do serviço disponibilizado por essa classe que não segue o SRP.
+
+```Java
+// ...
+// Classe que demonstra o envio de um email de confirmação de compra ao cliente.
+public class Principal {
+
+	public static void main(String[] args){
+
+		// ...
+		// Tratando como se ja tivesse identificado o id do cliente que será enviado o email.
+		
+		emailSender.send(new InternetAddress("empresa@email.com"), clienteId);
+	}
+}
+```
+
+Diante da demonstração da utilização do serviço prestado pela classe ```emailSender``` é possivel observar a quebra do SRP na chamada dela, sendo que o email do cliente não é passada como entrada na chamada do método ```send```, mas sim o ID do Cliente para que o email deste cliente seja retornado com um acesso ao banco de dados dentro da função. Implicando que além dessa classe ser resposavel por enviar o email, ela também precisa manusear o banco de dados, o que foge do escpo defino para ela.
 
 Tendo em vista que, as responsabilidades de um bloco de código estão atreladas aos papéis que os programadores desempenham no desenvolvimento de software. A classe apresentada é mantida por dois grupos diferentes de programadores encarregados deste sistema web, o time de marketing que administra o envio de emails e o time de banco de dados que administra o banco e toda sua arquitetura. A manutenção desta classe com múltiplas responsabilidades por dois times diferentes pode desencadear erros não esperados. Portanto, é desejado que as múltiplas responsabilidades desta classe sejam quebradas em múltiplos módulos de código para respeitar o SRP, como demonstrado a seguir.
 
